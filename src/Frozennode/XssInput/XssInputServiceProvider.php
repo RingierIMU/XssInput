@@ -18,7 +18,9 @@ class XssInputServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('frozennode/xssinput');
+		$this->publishes([
+        		__DIR__.'/../../config/xssinput.php'  => config_path('xssinput.php'),
+         	]);
 	}
 
 	/**
