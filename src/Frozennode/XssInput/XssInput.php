@@ -14,7 +14,7 @@ class XssInput extends \Illuminate\Support\Facades\Input {
 	public static function get($key = null, $default = null, $cleanse = null)
 	{
 		$value = static::$app['request']->input($key, $default);
-		$global_cleanse = static::$app['config']->get('xssinput::xssinput.xss_filter_all_inputs');
+		$global_cleanse = config('xssinput.xss_filter_all_inputs');
 
 		if ( $cleanse === true || ($cleanse === NULL && $global_cleanse) )
 		{
