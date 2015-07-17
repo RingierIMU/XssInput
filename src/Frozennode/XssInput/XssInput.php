@@ -1,5 +1,7 @@
 <?php namespace Frozennode\XssInput;
 
+use Route;
+
 class XssInput extends \Illuminate\Support\Facades\Input {
 
 	/**
@@ -16,7 +18,7 @@ class XssInput extends \Illuminate\Support\Facades\Input {
 		$value = static::$app['request']->input($key, $default);
 		$global_cleanse = config('xssinput.xss_filter_all_inputs');
 
-		if ( $cleanse === true || ($cleanse === NULL && $global_cleanse) )
+		if ( Route::getCurrentRoute()->getPrefix() != 'admin' && ($cleanse === true || ($cleanse === NULL && $global_cleanse)) )
 		{
 			$value = Security::xss_clean($value);
 		}
@@ -34,9 +36,9 @@ class XssInput extends \Illuminate\Support\Facades\Input {
 	public static function all($cleanse = null)
 	{
 		$all = static::$app['request']->all();
-		$global_cleanse = static::$app['config']->get('xssinput::xssinput.xss_filter_all_inputs');
+		$global_cleanse = config('xssinput.xss_filter_all_inputs');
 
-		if ( $cleanse === true || ($cleanse === NULL && $global_cleanse) )
+		if (  Route::getCurrentRoute()->getPrefix() != 'admin' && ($cleanse === true || ($cleanse === NULL && $global_cleanse)) )
 		{
 			foreach ($all as &$value)
 			{
