@@ -2,7 +2,7 @@
 
 use Route;
 
-class XssInput extends \Illuminate\Support\Facades\Input {
+class XssInput extends \Illuminate\Support\Facades\Request {
 
 	/**
 	 * Get an item from the input data.
